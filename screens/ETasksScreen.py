@@ -61,7 +61,6 @@ class ETasksScreen:
         self.rightCanvas.addImage(ICONEWTASK, RBARW / 2, 90, w, h, NEWEULOHA, self.openNewTask, True, anchor=CENTER)
         self.rightCanvas.addImage(ICOOPENTASK, RBARW / 2, 150, w, h, OPENEULOHA, self.loadeUloha, True, anchor=CENTER)
         self.rightCanvas.addImage(ICOSAVEASULOHA, RBARW / 2, 210, w, h, SAVEULOHA, self.saveUloha, True, anchor=CENTER)
-        # self.rightCanvas.addImage(ICOSAVEASZOSIT, RBARW / 2, 270, w, h, SAVEEZOSIT, None, True, anchor=CENTER)
 
     def createDownBar(self):
         self.downCanvas = BarCanvas(self, self.canvas, 0, WHEIGHT - 44, DOWNBARCOLOR, WWIDTH, 40)
@@ -75,8 +74,6 @@ class ETasksScreen:
         self.canvasLabel = self.downCanvas.addLabel(CANVASSIZE.format(self.canvasWidth, self.canvasHeight),
                                                     DOWNBARCOLOR, 0.08, 0.5)
         self.infoLabel = self.downCanvas.addLabel(OBJECTINFOEMPTY, DOWNBARCOLOR, 0.16, 0.5)
-        # self.downCanvas.addImage(ICOBUTTONSECONDARY, 1075, 22, 120, 32, AVAILBUTTONS, self.showAvailableButtonsScreen,
-        #                          ratioResize=False, anchor=CENTER, text=True)
         self.downCanvas.addImage(ICOBUTTONSECONDARY, 0.555, 0.5, int(self.windowWidth / 16), 32, AVAILBUTTONS,
                                  self.showAvailableButtonsScreen,
                                  ratioResize=False, anchor=CENTER, text=True, rel=True)
