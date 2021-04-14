@@ -16,9 +16,6 @@ class ClickableObject:
         self.imgObjs = []
         self.images = []
         self.imagesOrig = images
-
-        self.gridBorder = []
-
         sizeImage = images[0]
         w, h = sizeImage.size
 

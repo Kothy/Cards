@@ -132,6 +132,13 @@ SYSTEMHIGHLIGHT = "SystemHighlight"
 ROMAN = "roman"
 SHOWHOMES = "Zobraziť domovské miesta"
 HIDEHOMES = "Skryť domovské miesta"
+BOLD = "bold"
+W = "w"
+ROWNUM = "Počet riadkov"
+COLNUM = "Počet stĺpcov"
+GRIDCOLOR = "Farba mriežky"
+GRIDLINE = "Čiara mriežky"
+SPINSTYLE = "Klaudia.TSpinbox"
 
 # JSON keys
 JSONX = "x"
@@ -160,6 +167,7 @@ GRIDOBJECTS = "grids"
 HOMEOBJECTS = "homeobjects"
 JSONHOMESVIS = "homesvisible"
 
+
 # Binds
 BINDMOUSEWHEEL = "<MouseWheel>"
 BINDDELETE = "<Delete>"
@@ -175,6 +183,10 @@ BINDDOUBLELEFT = "<Double-Button-1>"
 # Cursors
 HORIZARROW = "sb_h_double_arrow"
 VERTICARROW = "sb_v_double_arrow"
+
+# Styles
+SUBMITSTYLE = "Submit.TButton"
+MYKCHECKSTYLE = "MyK.TCheckbutton"
 
 types = dict()
 types[TEXTTYPE] = TEXTTYPE

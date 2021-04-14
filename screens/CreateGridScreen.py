@@ -21,16 +21,16 @@ class CreateGridScreen:
         w, h = self.width, self.height
         self.parent.getCanvas().tkraise(self.transBgTkId)
         self.canvas = tk.Canvas(self.parent.getCanvas(), width=w, height=h, highlightthickness=0, bg=WHITE)
-        self.window = self.parent.getCanvas().create_window(pw / 2, ph / 2, anchor="c", window=self.canvas, width=w,
+        self.window = self.parent.getCanvas().create_window(pw / 2, ph / 2, anchor=CENTER, window=self.canvas, width=w,
                                                             height=h)
         self.style = ttk.Style()
-        self.style.configure('Submit.TButton', font=(FONT, 20), justify=tk.TOP, highlightthickness=0)
+        self.style.configure(SUBMITSTYLE, font=(FONT, 20), justify=tk.TOP, highlightthickness=0)
         self.submitButton = ttk.Button(self.canvas, text=SUBMIT, command=lambda: self.command(self, True),
-                                       style="Submit.TButton", takefocus=False)
+                                       style=SUBMITSTYLE, takefocus=False)
         self.submitButton.place(relx=0.35, rely=0.9, anchor=CENTER)
 
         self.cancelButton = ttk.Button(self.canvas, text=CANCEL, command=lambda: self.command(self, False),
-                                       style="Submit.TButton", takefocus=False)
+                                       style=SUBMITSTYLE, takefocus=False)
         self.cancelButton.place(relx=0.65, rely=0.9, anchor=CENTER)
 
         self.rowsNum = tk.StringVar()
@@ -38,24 +38,24 @@ class CreateGridScreen:
         self.rowsNum.set("1")
         self.colsNum.set("1")
         self.rows = ttk.Spinbox(self.canvas, from_=1, to=10, width=5, textvariable=self.rowsNum,
-                                style="Klaudia.TSpinbox", font=(FONT, 20))
+                                style=SPINSTYLE, font=(FONT, 20))
 
         self.cols = ttk.Spinbox(self.canvas, from_=1, to=10, width=5, textvariable=self.colsNum,
-                                style="Klaudia.TSpinbox", font=(FONT, 20))
+                                style=SPINSTYLE, font=(FONT, 20))
 
-        self.rowsLabel = ttk.Label(self.canvas, text="Počet riadkov", font=(FONT, 18))
-        self.colsLabel = ttk.Label(self.canvas, text="Počet stĺpcov", font=(FONT, 18))
-        self.colorLabel = ttk.Label(self.canvas, text="Farba mriežky", font=(FONT, 18))
-        self.colorTkId = self.createRectangle(self.canvas, 255, 263, 40, 40, "black")
+        self.rowsLabel = ttk.Label(self.canvas, text=ROWNUM, font=(FONT, 18))
+        self.colsLabel = ttk.Label(self.canvas, text=COLNUM, font=(FONT, 18))
+        self.colorLabel = ttk.Label(self.canvas, text=GRIDCOLOR, font=(FONT, 18))
+        self.colorTkId = self.createRectangle(self.canvas, 255, 263, 40, 40, BLACK)
         self.canvas.itemconfig(self.colorTkId, fill=BLACK)
         self.canvas.tag_bind(self.colorTkId, BINDLEFTBUTT, self.chooseColor)
         self.color = (BLACK, BLACK)
         style = ttk.Style()
-        style.configure("MyK.TCheckbutton", font=(FONT, 20), anchor="w", background=WHITE)
+        style.configure(MYKCHECKSTYLE, font=(FONT, 20), anchor=W, background=WHITE)
         self.gridLineVar = tk.BooleanVar()
         self.gridLineVar.set(True)
-        self.gridLineCheck = ttk.Checkbutton(self.canvas, text="Čiara mriežky", variable=self.gridLineVar, onvalue=True,
-                                             style="MyK.TCheckbutton", width=50, takefocus=False)
+        self.gridLineCheck = ttk.Checkbutton(self.canvas, text=GRIDLINE, variable=self.gridLineVar, onvalue=True,
+                                             style=MYKCHECKSTYLE, width=50, takefocus=False)
 
         relX1 = 0.28
         relX2 = 0.03
@@ -75,7 +75,6 @@ class CreateGridScreen:
     def chooseColor(self, _):
         color = askcolor(self.color[1])
         if color is not None and color != (None, None):
-            print(color)
             self.canvas.itemconfig(self.colorTkId, fill=color[1])
             self.color = color
 
@@ -99,15 +98,20 @@ class CreateGridScreen:
             for j in range(cols):
                 self.object.copy(x, y)
                 if self.gridLineVar.get():
-                    self.parent.desktopCanvas.addGrid(x, y, gridW, gridH, self.color[1])
-                x += self.object.width + (spaces)
+                    color = None
+                    if type(self.color) == tuple:
+                        color = self.color[1]
+                    else:
+                        color = self.color
+                    self.parent.desktopCanvas.addGrid(x, y, gridW, gridH, color)
+                x += self.object.width + spaces
 
-            y += self.object.height + (spaces)
+            y += self.object.height + spaces
             x = startX
-
 
         self.object.remove()
         self.object = None
+        self.parent.removeItemScales()
 
     def createRectangle(self, canvas, x, y, w, h, color):
         return canvas.create_rectangle(x - (w / 2), y - (h / 2), x + (w / 2), y + (h / 2), outline=color, width=2)
