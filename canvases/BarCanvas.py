@@ -21,7 +21,7 @@ class BarCanvas:
         self.labels = []
         self.buttons = []
 
-    def addImage(self, path, x, y, w, h, altText, command, ratioResize=False, anchor="nw", text=False, rel=False):
+    def addImage(self, path, x, y, w, h, altText, command, ratioResize=False, anchor="nw", text=False, rel=False, enterComm=None, leaveComm=None):
         img = Image.open(path)
         if ratioResize:
             img = resize_image(img, w, h)
@@ -46,9 +46,21 @@ class BarCanvas:
 
         self.images.append((img, imgObj, id, altText, x, y, textId))
         i = len(self.images) - 1
-        self.canvas.tag_bind(id, "<Enter>", lambda e: self.displayInfo(i))
-        self.canvas.tag_bind(id, "<Leave>", self.hideInfo)
+        leaveCommand = self.hideInfo if leaveComm is None else leaveComm
+        enterCommand = (lambda e: self.displayInfo(i)) if enterComm is None else enterComm
+        # self.canvas.tag_bind(id, "<Enter>", lambda e: self.displayInfo(i))
+        # self.canvas.tag_bind(id, "<Leave>", self.hideInfo)
+        self.canvas.tag_bind(id, "<Enter>", enterCommand)
+        self.canvas.tag_bind(id, "<Leave>", leaveCommand)
         self.canvas.tag_bind(id, "<Button-1>", command)
+        return id
+
+    def addStaticImage(self, path, x, y, w, h):
+        img = Image.open(path)
+        img = img.resize((w, h))
+        imgObj = ImageTk.PhotoImage(img)
+        id = self.canvas.create_image(x, y, image=imgObj, anchor=CENTER)
+        self.images.append((img, imgObj, id, "", x, y, 0))
 
     def removeImage(self, tkId):
         for i in range(len(self.images)):

@@ -2,6 +2,7 @@ import tkinter as tk
 from ImageButton import ImageButton
 from PIL import ImageTk, Image
 from screens.ETasksScreen import ETasksScreen
+from screens.eZositScreen import eZositScreen
 from Constants import *
 from ttkthemes import ThemedTk
 
@@ -16,6 +17,7 @@ class Main:
         self.bgTkId = 0
         # self.displayMenuScreen()
         self.displayETasksScreen(None)
+        # self.displayeZositScreen(None)
         self.root.mainloop()
 
     def setBackground(self):
@@ -39,8 +41,8 @@ class Main:
         self.actualScreen = ETasksScreen(self, self.canvas)
 
     def displayeZositScreen(self, _):
-        # self.removeMenu()
-        print("Zobrazim prostredie eZošit")
+        self.removeActualScreen()
+        self.actualScreen = eZositScreen(self.canvas)
 
     def removeMenu(self):
         self.canvas.delete(self.bgTkId)

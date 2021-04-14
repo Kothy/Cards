@@ -91,6 +91,7 @@ class DesktopCanvas:
         self.canvasWidth = value
         self.innerCanvas.configure(width=self.canvasWidth)
         self.parent.canvasLabel.configure(text=CANVASSIZE.format(self.canvasWidth, self.canvasHeight))
+
         self.updateBgImage()
         self.drawBorder()
 

@@ -21,7 +21,7 @@ CWIDTH = WWIDTH - 350
 CHEIGHT = WHEIGHT - 100
 RBARW = 60
 DBARH = 45
-DESKTOPWMAX = WWIDTH - 75
+DESKTOPWMAX = WWIDTH - 100
 DESKTOPHMAX = WHEIGHT - 60
 CLICKABLEMAX = 30
 
@@ -78,6 +78,7 @@ SAVEASEULOHA = "Vyber priečinok a názov pre eÚlohu"
 CHOOSEEULOHAJSON = "Vyber súbor s eÚlohou (*.json)"
 BACKTOMENU = "Späť do menu"
 NEWEULOHA = "Nová eÚloha"
+LOADULOHA = "Načítať úlohu"
 OPENEULOHA = "Otvoriť eÚlohu"
 SAVEEULOHA = "Uložiť ako eÚlohu"
 SAVEULOHA = "Uložiť úlohu"
