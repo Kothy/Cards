@@ -65,13 +65,7 @@ class StaticDraggableObject:
         if self.type == DRAGGABLE:
             self.getCanvas().tag_bind(self.tkId, BINDLEFTBUTT, self.onClick)
             self.getCanvas().tag_bind(self.tkId, BINDRIGHTMOTION, self.onDrag)
-            # self.getCanvas().tag_bind(self.tkId, BINDLEFTRELEASE, None)
-            # self.getCanvas().tag_bind(self.tkId, BINDRIGHTBUTT, self.displayMenu)
             self.getCanvas().tag_bind(self.tkId, BINDLEFTRELEASE, self.onDrop)
-            # self.getCanvas().tag_bind(self.tkId, BINDENTER,
-            #                           lambda e: self.getMain().changeInfoLabelText(OBJECTINFO.format(self.type)))
-            # self.getCanvas().tag_bind(self.tkId, BINDLEAVE,
-            #                           lambda e: self.getMain().changeInfoLabelText(OBJECTINFOEMPTY))
 
     def getMain(self):
         return self.parent.parent.parent
@@ -93,7 +87,7 @@ class StaticDraggableObject:
             elif fun == REMOVEOBJECT:
                 self.remove()
             elif fun == UPSIZE:
-                self.parent.parent.addScales()
+                self.parent.parent.addScales(self)
             elif fun == DOWNSIZE:
                 self.parent.parent.addScales(self)
             elif fun == FLIPVERTICALLY:

@@ -53,5 +53,8 @@ class GridObject:
         obj[JSONWIDTH] = self.width
         obj[JSONHEIGHT] = self.height
         obj[JSONTYPE] = self.type
-        obj[JSONCOLOR] = self.color[1]
+        if isinstance(self.color, tuple) or isinstance(self.color, list):
+            obj[JSONCOLOR] = self.color[1]
+        else:
+            obj[JSONCOLOR] = self.color
         return obj

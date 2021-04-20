@@ -1,4 +1,4 @@
-from PIL import ImageTk, Image
+from PIL import ImageTk
 from Constants import *
 import copy
 from serializeImg import imageToText
@@ -43,25 +43,21 @@ class ClonableObject:
     def clone(self):
         newObject = self.parent.parent.addObjectWithImage(self.img, DRAGGABLE, self.x + 10, self.y + 10)
         newObject = newObject.getObject()
+        newObject.cloneParent = self
         self.clonedObject = newObject
         newObject.typ = copy.copy(DRAGGABLE)
         newObject.changeWidth(copy.copy(self.width))
         newObject.changeHeight(copy.copy(self.height))
         newObject.draw()
-        # self.lower()
 
     def setBinds(self):
         self.getCanvas().tag_bind(self.tkId, BINDLEFTBUTT, self.onClick)
         self.getCanvas().tag_bind(self.tkId, BINDRIGHTMOTION, self.onDrag)
         self.getCanvas().tag_bind(self.tkId, BINDLEFTRELEASE, self.onDragRelease)
-        # self.getCanvas().tag_bind(self.tkId, BINDRIGHTBUTT, self.displayMenu)
-        # self.getCanvas().tag_bind(self.tkId, BINDENTER, self.displayInfo)
-        # self.getCanvas().tag_bind(self.tkId, BINDLEAVE,
-        #                           lambda e: self.getMain().changeInfoLabelText(OBJECTINFOEMPTY))
 
     def onDrag(self, event):
         if self.clonedObject is not None:
-            self.lower()
+            self.clonedObject.lift()
             self.clonedObject.onDrag(event)
 
     def onDragRelease(self, _):
@@ -90,10 +86,11 @@ class ClonableObject:
         self.setBinds()
 
     def lift(self):
+        self.getCanvas().lift(self.tkId)
         self.getCanvas().tag_raise(self.tkId)
 
     def lower(self):
-        self.getCanvas().tag_lower(self.tkId)
+        self.getCanvas().lower(self.tkId, self.parent.parent.bgTkId)
 
     def hide(self):
         self.getCanvas().itemconfig(self.tkId, state=HIDDEN)
@@ -105,7 +102,7 @@ class ClonableObject:
         return self.tkId
 
     def getCanvas(self):
-        return self.parent.getInnerCanvas()
+        return self.parent.parent.canvas
 
     def setX(self, value):
         self.x = value

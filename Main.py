@@ -16,8 +16,8 @@ class Main:
         self.actualScreen = None
         self.bgTkId = 0
         # self.displayMenuScreen()
-        # self.displayETasksScreen(None)
-        self.displayeZositScreen(None)
+        self.displayETasksScreen(None)
+        # self.displayeZositScreen(None)
         self.root.mainloop()
 
     def setBackground(self):

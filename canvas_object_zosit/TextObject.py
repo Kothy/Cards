@@ -13,7 +13,6 @@ class TextObject:
         self.textEntry = None
         self.text = EMPTYSTRING
         self.tkId = 0
-        self.tkSelectId = 0
         self.type = TEXTTYPE
         self.menuX = 0
         self.menuY = 0
@@ -107,8 +106,7 @@ class TextObject:
         return self.textEntry.get(INDEXONE, tk.END)
 
     def createTextEntry(self):
-        self.getCanvas().update()
-        self.getCanvas().delete(self.tkId)
+        self.destroy()
         self.inner = tk.Canvas(self.getCanvas(), bd=2)
         self.textEntry = tk.Text(self.inner, background=self.bgColor, foreground=self.fontSet[COLOR],
                                  width=self.width, font=self.font, height=self.height, padx=8, pady=5, relief=tk.RIDGE)
@@ -139,10 +137,11 @@ class TextObject:
         self.getMain().changeInfoLabelText(OBJECTINFOEMPTY)
 
     def destroy(self):
-        self.textEntry.destroy()
-        self.inner.destroy()
-        self.getCanvas().delete(self.tkId)
-        self.getCanvas().delete(self.tkSelectId)
+        if self.textEntry is not None:
+            self.textEntry.configure(state=NORMAL)
+            self.textEntry.destroy()
+            self.inner.destroy()
+            self.getCanvas().delete(self.tkId)
 
     def remove(self):
         self.destroy()
