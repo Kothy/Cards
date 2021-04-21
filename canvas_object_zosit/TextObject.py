@@ -95,12 +95,9 @@ class TextObject:
             self.fontSet[COLOR] = color
             self.textEntry.configure(fg=color)
 
-    def changeBgColor(self):
-        color = colorchooser.askcolor(title=CHOOSECOLOR, color=self.bgColor)
-        if color != (None, None):
-            color = color[1]
-            self.bgColor = color
-            self.textEntry.configure(bg=color)
+    def changeBgColor(self, color):
+        self.bgColor = color
+        self.textEntry.configure(bg=color)
 
     def getText(self):
         return self.textEntry.get(INDEXONE, tk.END)

@@ -354,7 +354,7 @@ class eZositScreen:
         self.borderTkId = self.parentCanvas.create_rectangle(0, 0, self.canvasWidth, self.canvasHeight,
                                                              outline=PRIMARYCOLOR, width=5)
 
-    def createRectangle(self, canvas, x, y, w, h, color="grey"):
+    def createRectangle(self, canvas, x, y, w, h, color=GREY):
         return canvas.create_rectangle(x - (w / 2), y - (h / 2), x + (w / 2), y + (h / 2), outline=color, width=2)
 
     def removeBgImage(self):
@@ -472,11 +472,16 @@ class eZositScreen:
                         textObj = self.objects[-1]
                         textObj.obj.changeWidth(obj[JSONWIDTH])
                         textObj.obj.changeHeight(obj[JSONWIDTH])
+
                         textObj.obj.setFontSet(obj[JSONFONTUNDER], obj[JSONFONTSTRIKE], obj[JSONFONTWEIGHT],
                                                obj[JSONFONTSLANT], obj[JSONFONTSIZE], obj[JSONFONTFAMILY],
                                                obj[JSONFONTCOLOR])
+                        textObj.obj.textEntry.configure(state=NORMAL)
                         textObj.obj.textEntry.insert(INDEXONE, obj[JSONTEXT])
+                        textObj.obj.textEntry.configure(state=DISABLED)
                         self.text = obj[JSONTEXT]
+                        textObj.obj.changeBgColor(obj[JSONBGCOLOR])
+
         for item in self.objects:
             print(item.obj.type)
 

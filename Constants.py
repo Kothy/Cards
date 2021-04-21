@@ -32,6 +32,7 @@ TERNARYCOLOR = '#d7f4d9'
 WHITE = "white"
 RED = "red"
 BLACK = "black"
+GREY = "grey"
 
 QUARTERYCOLOR = "#ffffff"
 TEBG = PRIMARYCOLOR

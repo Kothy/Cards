@@ -265,6 +265,7 @@ class ETasksScreen:
                         textObj.obj.setFontSet(obj[JSONFONTUNDER], obj[JSONFONTSTRIKE], obj[JSONFONTWEIGHT],
                                                obj[JSONFONTSLANT], obj[JSONFONTSIZE], obj[JSONFONTFAMILY],
                                                obj[JSONFONTCOLOR])
+                        textObj.obj.changeBgColorNoAsk(obj[JSONBGCOLOR])
                         textObj.obj.textEntry.insert(INDEXONE, obj[JSONTEXT])
                         self.text = obj[JSONTEXT]
 

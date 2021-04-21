@@ -129,6 +129,10 @@ class TextObject:
             self.bgColor = color
             self.textEntry.configure(bg=color)
 
+    def changeBgColorNoAsk(self, color):
+        self.bgColor = color
+        self.textEntry.configure(bg=color)
+
     def getText(self):
         return self.textEntry.get(INDEXONE, tk.END)
 
@@ -197,7 +201,7 @@ class TextObject:
     def toggle(self):
         if not self.parent.selected:
             self.select()
-            self.getMain().addItemScales(self.width, self.height, self, 400, 400)
+            self.getMain().addItemScales(self.width, self.height, self, self.getMain().canvasWidth, 400)
         else:
             self.getMain().removeItemScales()
             self.unselect()
