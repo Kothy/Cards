@@ -32,14 +32,18 @@ class AvailableButtonsScreen:
         dx = 0.03
         for (check, var, name) in self.checkboxes.checkbuttons:
             if var.get():
-                if strip_accents(name) == strip_accents(UPSIZE):
+                # if strip_accents(name) == strip_accents(UPSIZE):
+                #     array.append(name)
+                #     canvas.addImage(ICOUPSIZE, x, y, width / 48, h, name, None, True, "c", rel=True)
+                #     paths.append(ICOUPSIZE)
+                # if strip_accents(name) == strip_accents(DOWNSIZE):
+                #     array.append(name)
+                #     canvas.addImage(ICODOWNSIZE, x, y, width / 48, h, name, None, True, "c", rel=True)
+                #     paths.append(ICODOWNSIZE)
+                if strip_accents(name) == strip_accents(RESIZE):
                     array.append(name)
-                    canvas.addImage(ICOUPSIZE, x, y, width / 48, h, name, None, True, "c", rel=True)
-                    paths.append(ICOUPSIZE)
-                if strip_accents(name) == strip_accents(DOWNSIZE):
-                    array.append(name)
-                    canvas.addImage(ICODOWNSIZE, x, y, width / 48, h, name, None, True, "c", rel=True)
-                    paths.append(ICODOWNSIZE)
+                    canvas.addImage(ICONRESIZE, x, y, width / 48, h, name, None, True, "c", rel=True)
+                    paths.append(ICONRESIZE)
                 if strip_accents(name) == strip_accents(FLIPHORIZONTALLY):
                     array.append(name)
                     canvas.addImage(ICOFLIPH, x, y, width / 48, h, name, None, True, "c", rel=True)
@@ -70,10 +74,12 @@ class AvailableButtonsScreen:
         width = self.parent.windowWidth
         dx = 0.03
         for name in array:
-            if strip_accents(name) == strip_accents(UPSIZE):
-                canvas.addImage(ICOUPSIZE, x, y, width / 48, h, name, None, True, "c", rel=True)
-            if strip_accents(name) == strip_accents(DOWNSIZE):
-                canvas.addImage(ICODOWNSIZE, x, y, width / 48, h, name, None, True, "c", rel=True)
+            # if strip_accents(name) == strip_accents(UPSIZE):
+            #     canvas.addImage(ICOUPSIZE, x, y, width / 48, h, name, None, True, "c", rel=True)
+            # if strip_accents(name) == strip_accents(DOWNSIZE):
+            #     canvas.addImage(ICODOWNSIZE, x, y, width / 48, h, name, None, True, "c", rel=True)
+            if strip_accents(name) == strip_accents(RESIZE):
+                canvas.addImage(ICONRESIZE, x, y, width / 48, h, name, None, True, "c", rel=True)
             if strip_accents(name) == strip_accents(FLIPHORIZONTALLY):
                 canvas.addImage(ICOFLIPH, x, y, width / 48, h, name, None, True, "c", rel=True)
             if strip_accents(name) == strip_accents(FLIPVERTICALLY):

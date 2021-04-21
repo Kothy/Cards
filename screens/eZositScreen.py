@@ -24,6 +24,7 @@ icons[FLIPVERTICALLY] = "images/buttons/eZositIcons/vflip.png"
 icons[FLIPHORIZONTALLY] = "images/buttons/eZositIcons/hflip.png"
 icons[UPSIZE] = "images/buttons/eZositIcons/enlarge.png"
 icons[DOWNSIZE] = "images/buttons/eZositIcons/shrink.png"
+icons[RESIZE] = "images/buttons/eZositIcons/resize.png"
 
 icons_grey = dict()
 icons_grey[COPY] = "images/buttons/eZositIcons/copy_grey.png"
@@ -33,7 +34,9 @@ icons_grey[FLIPVERTICALLY] = "images/buttons/eZositIcons/vflip_grey.png"
 icons_grey[FLIPHORIZONTALLY] = "images/buttons/eZositIcons/hflip_grey.png"
 icons_grey[UPSIZE] = "images/buttons/eZositIcons/enlarge_grey.png"
 icons_grey[DOWNSIZE] = "images/buttons/eZositIcons/shrink_grey.png"
+icons_grey[RESIZE] = "images/buttons/eZositIcons/resize_grey.png"
 
+barWidth = WWIDTH - DESKTOPWMAX
 
 
 class eZositScreen:
@@ -47,8 +50,10 @@ class eZositScreen:
         self.borderTkId = 0
         self.innerWindow = self.parentCanvas.create_window(0, 0, anchor=NW, window=self.canvas)
         self.availButtons = []
+        self.canvasWidth = CWIDTH
+        self.canvasHeight = CHEIGHT
         self.createRightBar()
-        barWidth = WWIDTH - DESKTOPWMAX
+        self.setParentCanvasSize(self.canvasWidth + barWidth + 5, WHEIGHT)
         self.iconH, self.iconW = barWidth - 30, barWidth - 10
         self.selectedTkId = None
         self.selectedFunction = None
@@ -57,8 +62,6 @@ class eZositScreen:
         self.grids = []
         self.bgImage = None
         self.bgColor = WHITE
-        self.canvasWidth = CWIDTH
-        self.canvasHeight = CHEIGHT
         self.drawBorder()
         self.homesVisible = False
         self.hover = None
@@ -187,14 +190,18 @@ class eZositScreen:
         return None
 
     def createRightBar(self):
-        barWidth = WWIDTH - DESKTOPWMAX
-        self.rightBar = BarCanvas(self, self.parentCanvas, WWIDTH - barWidth - 5, 0, PRIMARYCOLOR, barWidth, WHEIGHT)
+        # self.rightBar = BarCanvas(self, self.parentCanvas, WWIDTH - barWidth - 5, 0, PRIMARYCOLOR, barWidth, WHEIGHT)
+        self.rightBar = BarCanvas(self, self.parentCanvas, CWIDTH + 5, 0, PRIMARYCOLOR, barWidth, WHEIGHT)
+        self.loadRightBar()
+
+    def moveRightBar(self):
+        self.rightBar.canvas.destroy()
+        self.rightBar = BarCanvas(self, self.parentCanvas, self.canvasWidth + 5, 0, PRIMARYCOLOR, barWidth, WHEIGHT)
         self.loadRightBar()
 
     def loadRightBar(self):
         arr = self.availButtons
         self.rightBar.removeAllImages()
-        barWidth = WWIDTH - DESKTOPWMAX
         h, w = barWidth - 30, barWidth - 10
         x = 190
         space = 25
@@ -224,21 +231,27 @@ class eZositScreen:
                                anchor=CENTER, enterComm=lambda x: self.hoverIcon(REMOVEOBJECT),
                                leaveComm=self.unhoverIcon)
 
+        # y = (x + (h + dy) * 2) + space
+        # path = icons[UPSIZE] if strip_accents(UPSIZE) in arr else icons_grey[UPSIZE]
+        # self.ys.append([y, path])
+        # self.rightBar.addImage(path, barWidth / 2, y, w, h, UPSIZE, lambda x: self.selectIcon(UPSIZE), True,
+        #                        anchor=CENTER, enterComm=lambda x: self.hoverIcon(UPSIZE), leaveComm=self.unhoverIcon)
+        #
+        # y = (x + (h + dy) * 3) + space
+        # path = icons[DOWNSIZE] if strip_accents(DOWNSIZE) in arr else icons_grey[DOWNSIZE]
+        # self.ys.append([y, path])
+        # self.rightBar.addImage(path, barWidth / 2, y,
+        #                        w, h, DOWNSIZE, lambda x: self.selectIcon(DOWNSIZE), True,
+        #                        anchor=CENTER, enterComm=lambda x: self.hoverIcon(DOWNSIZE),
+        #                        leaveComm=self.unhoverIcon)
+
         y = (x + (h + dy) * 2) + space
-        path = icons[UPSIZE] if strip_accents(UPSIZE) in arr else icons_grey[UPSIZE]
+        path = icons[RESIZE] if strip_accents(RESIZE) in arr else icons_grey[RESIZE]
         self.ys.append([y, path])
-        self.rightBar.addImage(path, barWidth / 2, y, w, h, UPSIZE, lambda x: self.selectIcon(UPSIZE), True,
-                               anchor=CENTER, enterComm=lambda x: self.hoverIcon(UPSIZE), leaveComm=self.unhoverIcon)
+        self.rightBar.addImage(path, barWidth / 2, y, w, h, RESIZE, lambda x: self.selectIcon(RESIZE), True,
+                               anchor=CENTER, enterComm=lambda x: self.hoverIcon(RESIZE), leaveComm=self.unhoverIcon)
 
         y = (x + (h + dy) * 3) + space
-        path = icons[DOWNSIZE] if strip_accents(DOWNSIZE) in arr else icons_grey[DOWNSIZE]
-        self.ys.append([y, path])
-        self.rightBar.addImage(path, barWidth / 2, y,
-                               w, h, DOWNSIZE, lambda x: self.selectIcon(DOWNSIZE), True,
-                               anchor=CENTER, enterComm=lambda x: self.hoverIcon(DOWNSIZE),
-                               leaveComm=self.unhoverIcon)
-
-        y = (x + (h + dy) * 4) + space
         path = icons[FLIPVERTICALLY] if strip_accents(FLIPVERTICALLY) in arr else icons_grey[FLIPVERTICALLY]
         self.ys.append([y, path])
         self.rightBar.addImage(path, barWidth / 2, y, w,
@@ -246,7 +259,7 @@ class eZositScreen:
                                anchor=CENTER, enterComm=lambda x: self.hoverIcon(FLIPVERTICALLY),
                                leaveComm=self.unhoverIcon)
 
-        y = (x + (h + dy) * 5) + space
+        y = (x + (h + dy) * 4) + space
         path = icons[FLIPHORIZONTALLY] if strip_accents(FLIPHORIZONTALLY) in arr else icons_grey[FLIPHORIZONTALLY]
         self.ys.append([y, path])
         self.rightBar.addImage(path, barWidth / 2, y, w,
@@ -262,28 +275,32 @@ class eZositScreen:
             return self.ys[0][0]
         elif text == REMOVEOBJECT:
             return self.ys[1][0]
-        elif text == UPSIZE:
+        # elif text == UPSIZE:
+        #     return self.ys[2][0]
+        # elif text == DOWNSIZE:
+        #     return self.ys[3][0]
+        elif text == RESIZE:
             return self.ys[2][0]
-        elif text == DOWNSIZE:
-            return self.ys[3][0]
         elif text == FLIPVERTICALLY:
-            return self.ys[4][0]
+            return self.ys[3][0]
         elif text == FLIPHORIZONTALLY:
-            return self.ys[5][0]
+            return self.ys[4][0]
 
     def getPath(self, text):
         if text == COPY:
             return self.ys[0][1]
         elif text == REMOVEOBJECT:
             return self.ys[1][1]
-        elif text == UPSIZE:
+        # elif text == UPSIZE:
+        #     return self.ys[2][1]
+        # elif text == DOWNSIZE:
+        #     return self.ys[3][1]
+        elif text == RESIZE:
             return self.ys[2][1]
-        elif text == DOWNSIZE:
-            return self.ys[3][1]
         elif text == FLIPVERTICALLY:
-            return self.ys[4][1]
+            return self.ys[3][1]
         elif text == FLIPHORIZONTALLY:
-            return self.ys[5][1]
+            return self.ys[4][1]
 
     def getCanvas(self):
         return self.canvas
@@ -309,6 +326,12 @@ class eZositScreen:
             self.selectedFunction = text
             self.selectedTkId = self.createRectangle(self.rightBar.canvas, x, y, 80, 80)
         else:
+            self.selectedFunction = None
+            self.selectedTkId = 0
+
+    def unselectIcon(self):
+        if self.selectedTkId is not None:
+            self.rightBar.canvas.delete(self.selectedTkId)
             self.selectedFunction = None
             self.selectedTkId = 0
 
@@ -381,6 +404,10 @@ class eZositScreen:
     def lowerBg(self):
         self.canvas.lower(self.bgTkId)
 
+    def setParentCanvasSize(self, width, height):
+        self.parentCanvas.config(width=width)
+        self.parentCanvas.config(height=height)
+
     def loadeZosit(self, _):
         result = True
         if len(self.objects) > 0:
@@ -424,6 +451,9 @@ class eZositScreen:
 
                 for homeObj in result[HOMEOBJECTS]:
                     self.addHome(homeObj[JSONX], homeObj[JSONY], homeObj[JSONWIDTH], homeObj[JSONHEIGHT], homeVis)
+
+                self.moveRightBar()
+                self.setParentCanvasSize(result[JSONWIDTH] + barWidth + 5, WHEIGHT)
 
                 for obj in result[JSONOBJECTS]:
                     if types[obj[JSONTYPE]] == CLONABLE or types[obj[JSONTYPE]] == DRAGGABLE or types[

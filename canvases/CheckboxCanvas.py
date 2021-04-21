@@ -26,7 +26,7 @@ class CheckboxCanvas:
         self.lab = ttk.Label(self.canvas, text=TOOLS, font=fon, background=WHITE)
         self.lab.place(relx=0.5, rely=0.10, anchor=CENTER)
 
-        checks = [UPSIZE, DOWNSIZE, FLIPHORIZONTALLY, FLIPVERTICALLY, COPYPASTE, REMOVEOBJECT]
+        checks = [RESIZE, FLIPHORIZONTALLY, FLIPVERTICALLY, COPYPASTE, REMOVEOBJECT] # UPSIZE, DOWNSIZE
         self.checkbuttons = []
 
         style = ttk.Style()

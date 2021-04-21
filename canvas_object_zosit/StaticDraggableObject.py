@@ -86,14 +86,17 @@ class StaticDraggableObject:
                 print(self.parent.parent.selectedFunction)
             elif fun == REMOVEOBJECT:
                 self.remove()
-            elif fun == UPSIZE:
+            elif fun == RESIZE:
                 self.parent.parent.addScales(self)
-            elif fun == DOWNSIZE:
-                self.parent.parent.addScales(self)
+            # elif fun == UPSIZE:
+            #     self.parent.parent.addScales(self)
+            # elif fun == DOWNSIZE:
+            #     self.parent.parent.addScales(self)
             elif fun == FLIPVERTICALLY:
                 self.flipVertically()
             elif fun == FLIPHORIZONTALLY:
                 self.flipHorizontally()
+            self.parent.parent.unselectIcon()
 
     def onDrag(self, event):
         if self.parent.parent.selectedFunction is None:

@@ -141,6 +141,7 @@ COLNUM = "Počet stĺpcov"
 GRIDCOLOR = "Farba mriežky"
 GRIDLINE = "Čiara mriežky"
 SPINSTYLE = "Klaudia.TSpinbox"
+RESIZE = "Zväčšiť / Zmenšiť"
 
 # JSON keys
 JSONX = "x"
@@ -219,6 +220,7 @@ ICOREMOVE = "images/buttons/delete.png"
 ICOBUTTONPRIMARY = "images/buttons/button6.png"
 ICOBUTTONSECONDARY = "images/buttons/button7.png"
 ICOBUTTONTERNARY = "images/buttons/button8.png"
+ICONRESIZE = "images/buttons/resize.png"
 
 # IMAGES
 IMAGETRANSPARENT = "images/transparentBg.png"
